@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saved Users</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            text-align: center;
+        }
+
+        .user-list {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            text-align: left;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Saved Users</h2>
+        <div class="user-list" id="user-list">
+            <!-- Saved users will be listed here -->
+        </div>
+        <button onclick="clearData()">Clear Data</button>
+    </div>
+
+    <script>
+        // Display all saved users when the page loads
+        window.onload = function() {
+            const userList = document.getElementById("user-list");
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+
+            // Display each user in a separate paragraph
+            userList.innerHTML = users.map((user, index) => `<p>User ${index + 1}: Email: ${user.email}, Password: ${user.password}</p>`).join("");
+
+            // If no users are found, show a message
+            if (users.length === 0) {
+                userList.innerHTML = "<p>No saved users found.</p>";
+            }
+        };
+
+        // Clear all saved users from localStorage
+        function clearData() {
+            localStorage.removeItem("users");  // Clear all saved users
+            window.location.reload();           // Reload the page to update the view
+        }
+    </script>
+</body>
+</html>
